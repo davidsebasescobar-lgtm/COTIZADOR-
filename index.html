@@ -2262,6 +2262,10 @@
                     <span class="pdf-label">Capital invertido:</span>
                     <span class="pdf-value" id="pdf-capital-resumen">$0.00</span>
                 </div>
+                <div class="pdf-total-row">
+                    <span class="pdf-label">Interés bruto generado:</span>
+                    <span class="pdf-value" id="pdf-interes-bruto">$0.00</span>
+                </div>
 
                 <div class="pdf-total-row" id="pdf-retencion-row" style="display:none;">
                     <span class="pdf-label" style="color:#E53935;">⚠️ Retención fiscal (2%) — plazo &lt; 180
@@ -2280,9 +2284,16 @@
                 <div id="pdf-optimized-row"
                     style="display:none; margin-top:8px; padding-top:8px; border-top:1px dashed #A5D6A7;">
                     <div class="pdf-total-row">
-                        <span class="pdf-label" style="color:#006B3F;">✨ Ganancia extra (ahorro programado 6%
+                        <span class="pdf-label" style="color:#006B3F; font-weight:700;">Interés optimizado (Neto +
+                            Ahorro):</span>
+                        <span class="pdf-value" style="color:#006B3F;" id="pdf-interes-optimizado">$0.00</span>
+                    </div>
+                    <div class="pdf-total-row">
+                        <span class="pdf-label" style="color:#006B3F; font-size: 11px;">✨ Ganancia extra (ahorro
+                            programado 6%
                             anual):</span>
-                        <span class="pdf-value" style="color:#006B3F;" id="pdf-ganancia-extra">$0.00</span>
+                        <span class="pdf-value" style="color:#006B3F; font-size: 11px;"
+                            id="pdf-ganancia-extra">$0.00</span>
                     </div>
                 </div>
 
@@ -3368,12 +3379,10 @@
             // Resumen financiero
             document.getElementById('pdf-capital-resumen').textContent = formatCurrency(data.capital);
 
-            // Si hay ahorro programado, sumar al interés neto el interés ganado por el ahorro
-            const interesMostrar = (data.optimizado && data.valorFuturoAnualidad > 0)
-                ? (data.interesNeto + data.valorFuturoAnualidad)
-                : data.interesNeto;
-
-            document.getElementById('pdf-interes-neto').textContent = formatCurrency(interesMostrar);
+            // Resumen financiero
+            document.getElementById('pdf-capital-resumen').textContent = formatCurrency(data.capital);
+            document.getElementById('pdf-interes-bruto').textContent = formatCurrency(data.interesTotal);
+            document.getElementById('pdf-interes-neto').textContent = formatCurrency(data.interesNeto);
 
             const retRow = document.getElementById('pdf-retencion-row');
             if (data.retencion > 0) {
@@ -3395,7 +3404,9 @@
             const optRow = document.getElementById('pdf-optimized-row');
             if (data.optimizado && data.valorFuturoAnualidad > 0) {
                 optRow.style.display = 'block';
-                document.getElementById('pdf-ganancia-extra').textContent = formatCurrency(data.valorFuturoAnualidad);
+                const intOpt = data.interesNeto + data.valorFuturoAnualidad;
+                document.getElementById('pdf-interes-optimizado').textContent = formatCurrency(intOpt);
+                document.getElementById('pdf-ganancia-extra').textContent = '+ ' + formatCurrency(data.valorFuturoAnualidad);
             } else {
                 optRow.style.display = 'none';
             }
