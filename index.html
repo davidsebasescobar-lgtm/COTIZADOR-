@@ -198,6 +198,20 @@
             color: #4ADE80;
         }
 
+        /* === LOGIN: force legible text regardless of theme === */
+        /* The login card has white background; never inherit dark text vars */
+        #login-wrapper input,
+        #login-wrapper input:focus {
+            color: #1a2332 !important;
+            background-color: #ffffff !important;
+            -webkit-text-fill-color: #1a2332 !important;
+        }
+
+        #login-wrapper ::placeholder {
+            color: #94a3b8 !important;
+            opacity: 1;
+        }
+
         /* ========== Reset & Base ========== */
         * {
             margin: 0;
@@ -220,7 +234,7 @@
             padding: 1.25rem 2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             box-shadow: var(--shadow-sm);
             position: sticky;
             top: 0;
@@ -2366,17 +2380,15 @@
         <div class="header-brand">
             <span class="header-brand-name">COOPROGRESO</span>
         </div>
-        <div style="display:flex; align-items:center; gap:0.75rem;">
-            <!-- Dark Mode Toggle -->
-            <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Cambiar tema"
+        <div class="header-user">
+            <!-- Dark Mode Toggle — esquina derecha -->
+            <button class="theme-toggle-btn" id="themeToggleBtn" onclick="window.toggleTheme()" title="Cambiar tema"
                 aria-label="Cambiar entre modo claro y oscuro">
                 <span class="theme-toggle-icon" id="themeIcon">&#9728;&#65039;</span>
                 <span class="theme-toggle-label" id="themeLabel">Claro</span>
             </button>
-            <div class="header-user">
-                <span class="user-email" id="user-badge"></span>
-                <button class="btn-logout" id="logout-btn">Cerrar sesión</button>
-            </div>
+            <span class="user-email" id="user-badge"></span>
+            <button class="btn-logout" id="logout-btn">Cerrar sesión</button>
         </div>
     </header>
 
@@ -4513,10 +4525,12 @@
             const label = document.getElementById('themeLabel');
             if (!icon || !label) return;
             if (theme === 'dark') {
-                icon.textContent = '🌙';
+                // Show moon icon, label says "Oscuro"
+                icon.innerHTML = '&#127769;';
                 label.textContent = 'Oscuro';
             } else {
-                icon.textContent = '☀️';
+                // Show sun icon, label says "Claro"
+                icon.innerHTML = '&#9728;&#65039;';
                 label.textContent = 'Claro';
             }
         }
@@ -4527,6 +4541,8 @@
             localStorage.setItem(THEME_KEY, next);
             applyTheme(next);
         }
+        // Expose globally so onclick attributes can call it
+        window.toggleTheme = toggleTheme;
 
         // Restore saved preference or detect system preference on load
         (function initTheme() {
