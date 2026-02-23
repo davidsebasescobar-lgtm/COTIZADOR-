@@ -198,19 +198,7 @@
             color: #4ADE80;
         }
 
-        /* === LOGIN: force legible text regardless of theme === */
-        /* The login card has white background; never inherit dark text vars */
-        #login-wrapper input,
-        #login-wrapper input:focus {
-            color: #1a2332 !important;
-            background-color: #ffffff !important;
-            -webkit-text-fill-color: #1a2332 !important;
-        }
 
-        #login-wrapper ::placeholder {
-            color: #94a3b8 !important;
-            opacity: 1;
-        }
 
         /* ========== Reset & Base ========== */
         * {
@@ -1596,13 +1584,13 @@
         .login-title h2 {
             font-size: 1.35rem;
             font-weight: 800;
-            color: var(--text-primary);
+            color: #1a2332;
             margin-bottom: 0.3rem;
         }
 
         .login-title p {
             font-size: 0.83rem;
-            color: var(--text-muted);
+            color: #64748b;
         }
 
         .login-field {
@@ -1613,19 +1601,19 @@
             display: block;
             font-size: 0.8rem;
             font-weight: 600;
-            color: var(--text-secondary);
+            color: #475569;
             margin-bottom: 0.4rem;
         }
 
         .login-field input {
             width: 100%;
             padding: 0.8rem 1rem;
-            border: 1.5px solid var(--border);
+            border: 1.5px solid #e2e8f0;
             border-radius: 10px;
             font-size: 0.95rem;
             font-family: inherit;
             background: #F8FAFC;
-            color: var(--text-primary);
+            color: #1a2332;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
